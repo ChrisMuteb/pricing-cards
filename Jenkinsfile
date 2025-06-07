@@ -7,16 +7,12 @@ pipeline {
 //   }
 
   stages {
-    stage ('hello') {
-        steps {
-            echo 'Hello World'
-        }
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/ChrisMuteb/pricing-cards.git'
+        echo 'Checkout stage completed successfully!'
+      }
     }
-    // stage('Checkout') {
-    //   steps {
-    //     git 'https://github.com/ChrisMuteb/pricing-cards.git'
-    //   }
-    // }
 
     // stage('Deploy to S3') {
     //   steps {
