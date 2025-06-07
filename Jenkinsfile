@@ -9,7 +9,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/ChrisMuteb/pricing-cards.git'
+        // git 'https://github.com/ChrisMuteb/pricing-cards.git'
         echo 'Checkout stage completed successfully!'
       }
     }
