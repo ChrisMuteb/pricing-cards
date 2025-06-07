@@ -7,16 +7,21 @@ pipeline {
   }
 
   stages {
-    stage('Checkout') {
-      steps {
-        // git 'https://github.com/ChrisMuteb/pricing-cards.git'
-        echo 'Checkout stage completed successfully!'
-      }
-    }
-
     stage('Deploy to S3') {
       steps {
-        sh 'aws s3 sync . s3://$S3_BUCKET --delete --exclude ".git/*"'
+        withCredentials([
+          string(credentialsId: 'aws-access-key-id-lsp', variable: 'AWS_ACCESS_KEY_ID'),
+          string(credentialsId: 'aws-secret-access-key-lsp', variable: 'AWS_SECRET_ACCESS_KEY')
+        ]) {
+          sh '''
+            echo "Deploying to S3..."
+            aws s3 sync . s3://$S3_BUCKET \
+              --delete \
+              --exclude ".git/*" \
+              --exclude "Jenkinsfile" \
+              --exclude "*.md"
+          '''
+        }
       }
     }
   }
